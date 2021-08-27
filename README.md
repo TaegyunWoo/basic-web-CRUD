@@ -1,5 +1,5 @@
 # basic-web-CRUD
-## 레파지토리 설명
+## Repository 설명
 
 - 본 저장소는 CRUD 게시판형 웹 애플리케이션을 관리합니다.
 - 백엔드 구현에 집중하였으며, Spring Boot를 활용하였습니다.
