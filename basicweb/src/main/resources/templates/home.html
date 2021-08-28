@@ -5,7 +5,6 @@
     <title>Home Page</title>
     <link th:href="@{/css/bootstrap.min.css}"
           href="../css/bootstrap.min.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
     <style>
         .login {
             min-height: 100vh;
@@ -26,6 +25,12 @@
             letter-spacing: 0.05rem;
             padding: 0.75rem 1rem;
         }
+
+        .error-class {
+            border-width: thick;
+            color: #dc3545;
+            border-color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -40,19 +45,25 @@
                             <h3 class="login-heading mb-4">Welcome back!</h3>
 
                             <!-- Sign In Form -->
-                            <form>
+                            <form th:object="${user}" method="post" th:action>
                                 <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                                    <label for="floatingInput">Email address</label>
+                                    <input type="text" id="email" class="form-control" th:field="*{email}" th:errorclass="error-class" placeholder="name@example.com">
+                                    <label for="email">Email address</label>
+                                    <div th:errors="*{email}" th:errorclass="error-class">
+                                        아이디 오류 안내 텍스트
+                                    </div>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                                    <label for="floatingPassword">Password</label>
+                                    <input type="password" id="password" class="form-control" th:field="*{password}" th:errorclass="error-class" placeholder="Password">
+                                    <label id="password">Password</label>
+                                    <div th:errors="*{password}" th:errorclass="error-class">
+                                        비밀번호 오류 안내 텍스트
+                                    </div>
                                 </div>
 
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                                    <label class="form-check-label" for="rememberPasswordCheck">
+                                    <input class="form-check-input" type="checkbox" id="rememberPassword" th:field="*{rememberPassword}">
+                                    <label class="form-check-label" for="rememberPassword">
                                         Remember password
                                     </label>
                                 </div>
