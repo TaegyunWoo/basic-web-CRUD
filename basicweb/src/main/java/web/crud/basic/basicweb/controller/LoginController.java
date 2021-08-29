@@ -29,6 +29,7 @@ public class LoginController {
             return "home";
         }
 
+
         return "redirect:/board";
     }
 
