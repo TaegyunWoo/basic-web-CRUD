@@ -42,10 +42,15 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
-                            <h3 class="login-heading mb-4">Welcome back!</h3>
+                            <h3 class="login-heading mb-4">Welcome!</h3>
 
                             <!-- Sign In Form -->
                             <form th:object="${user}" method="post" th:action>
+                                <div th:if="${#fields.hasGlobalErrors()}" class="error-class">
+                                    <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+                                        글로벌 에러 텍스트
+                                    </p>
+                                </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" id="email" class="form-control" th:field="*{email}" th:errorclass="error-class" placeholder="name@example.com">
                                     <label for="email">Email address</label>
