@@ -5,12 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import web.crud.basic.basicweb.domain.User;
 import web.crud.basic.basicweb.domain.UserMapper;
 import web.crud.basic.basicweb.form.LoginForm;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * 로그인 관련 컨트롤러
@@ -31,14 +32,15 @@ public class LoginController {
 
     @PostMapping("/")
     public String login(@Validated @ModelAttribute("user") LoginForm form,
-                        BindingResult bindingResult) {
+                        BindingResult bindingResult,
+                        HttpServletRequest request) {
 
-        User user;
+        User user = getLoginUser(form.getEmail(), form.getPassword());
+
         if (bindingResult.hasFieldErrors()) {
             return "home";
         }
 
-        user = getLoginUser(form.getEmail(), form.getPassword());
         if (user == null) {
             bindingResult.reject("wrongLoginInfo", null, null);
         }
@@ -47,8 +49,21 @@ public class LoginController {
             return "home";
         }
 
+        //세션 생성
+        HttpSession session = request.getSession(true);
+        session.setAttribute("loginUser", user);
 
         return "redirect:/board";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+            log.info("세션 삭제");
+        }
+        return "redirect:/";
     }
 
     /**
