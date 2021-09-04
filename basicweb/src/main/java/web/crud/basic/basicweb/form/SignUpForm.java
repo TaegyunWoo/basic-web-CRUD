@@ -7,14 +7,19 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Data
-public class LoginForm {
+public class SignUpForm {
 
     @NotBlank
     @Email
     private String email;
 
     @NotBlank
+    private String name;
+
+    @NotBlank
     @Pattern(regexp = FormFieldPattern.PASSWORD_PATTERN)
     private String password;
 
+    @NotBlank
+    private String confirmPassword;
 }

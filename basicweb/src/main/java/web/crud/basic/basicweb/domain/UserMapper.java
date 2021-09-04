@@ -15,4 +15,11 @@ public interface UserMapper {
     User getUserByEmailAndPassword(@Param("email") String email,
                                    @Param("password") String password);
 
+    @Select("SELECT * FROM user WHERE email=#{email}")
+    @ResultMap("UserMap")
+    User getUserByEmail(@Param("email") String email);
+
+    @Insert("INSERT INTO user(email, name, password) VALUES (#{user.email}, #{user.name}, #{user.password})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    int insertUser(@Param("user") User user);
 }
