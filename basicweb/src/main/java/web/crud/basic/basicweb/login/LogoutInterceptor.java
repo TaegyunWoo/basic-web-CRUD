@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 public class LogoutInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.info("logout postHandle");
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setHeader("Cache-Control", "no-store");
