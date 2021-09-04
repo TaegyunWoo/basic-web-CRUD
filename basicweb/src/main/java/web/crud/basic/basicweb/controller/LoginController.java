@@ -6,12 +6,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.crud.basic.basicweb.domain.User;
 import web.crud.basic.basicweb.domain.UserMapper;
 import web.crud.basic.basicweb.form.LoginForm;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.http.HttpHeaders;
 
 /**
  * 로그인 관련 컨트롤러
@@ -25,9 +29,14 @@ public class LoginController {
     private final UserMapper userMapper;
 
     @GetMapping("/")
-    public String viewLogin(@ModelAttribute("user") LoginForm form) {
+    public String viewLogin(@ModelAttribute("user") LoginForm form,
+                            @SessionAttribute(value = "loginUser", required = false) User user) {
+        if (user == null) {
+            return "home";
+        } else {
+            return "redirect:/board";
+        }
 
-        return "home";
     }
 
     @PostMapping("/")
@@ -57,11 +66,11 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate();
-            log.info("세션 삭제");
+            session.removeAttribute("loginUser");
+            log.info("loginUser 속성 삭제");
         }
         return "redirect:/";
     }
