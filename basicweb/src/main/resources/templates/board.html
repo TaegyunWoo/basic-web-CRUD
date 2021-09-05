@@ -22,11 +22,6 @@
   <!-- Project One -->
   <th:block th:each="article : ${articleList}">
     <div class="row">
-      <div class="col-md-7">
-        <a href="#">
-          <img class="img-fluid rounded mb-3 mb-md-0" src="https://via.placeholder.com/700x300" alt="">
-        </a>
-      </div>
       <div class="col-md-5">
         <h3 th:utext="${article.title}">게시글 제목</h3>
         <p th:utext="${article.content}">게시글 본문</p>
