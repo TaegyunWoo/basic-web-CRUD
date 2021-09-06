@@ -55,4 +55,14 @@ public class BoardService {
         return updatedArticle;
     }
 
+    @Transactional
+    public void deleteArticle(Long articleId) {
+        log.info("Delete Article ID: {}", articleId);
+        log.info("articleMapper.getById(articleId): {}", articleMapper.getById(articleId));
+        if (articleMapper.getById(articleId) == null) {
+            return;
+        }
+        articleMapper.delete(articleId);
+    }
+
 }

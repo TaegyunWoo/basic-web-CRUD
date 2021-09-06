@@ -112,6 +112,12 @@ public class BoardController {
 
     }
 
+    @GetMapping("/edit/{articleNum}/delete")
+    public String deleteArticle(@PathVariable Long articleNum) {
+        boardService.deleteArticle(articleNum);
+        return "redirect:/board/1";
+    }
+
     private List<Article> getArticlesOfPage(int pageNum, List<Article> articleList) {
         int lastArticleIndexOfPage = pageNum * 3 - 1;
         int firstArticleIndexOfPage = lastArticleIndexOfPage - 2;

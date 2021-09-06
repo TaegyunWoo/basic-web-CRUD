@@ -32,4 +32,7 @@ public interface ArticleMapper {
     @Update("UPDATE article SET title=#{article.title}, datetime=#{article.dateTime}, content=#{article.content} WHERE id=#{article.id}")
     @ResultMap("ArticleMap")
     int update(@Param("article") Article article);
+
+    @Delete("DELETE FROM article WHERE id=#{id}")
+    int delete(@Param("id") Long id);
 }
