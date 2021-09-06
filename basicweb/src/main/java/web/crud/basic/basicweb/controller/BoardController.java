@@ -73,6 +73,18 @@ public class BoardController {
         return "redirect:/board/1";
     }
 
+    @GetMapping("/article/{articleNum}")
+    public String showArticle(@PathVariable Long articleNum,
+                              Model model) {
+        Article article = boardService.getArticleById(articleNum);
+        String writerName = boardService.getWriterName(article);
+
+        model.addAttribute("article", article);
+        model.addAttribute("writerName", writerName);
+
+        return "article";
+    }
+
     private List<Article> getArticlesOfPage(int pageNum, List<Article> articleList) {
         int lastArticleIndexOfPage = pageNum * 3 - 1;
         int firstArticleIndexOfPage = lastArticleIndexOfPage - 2;

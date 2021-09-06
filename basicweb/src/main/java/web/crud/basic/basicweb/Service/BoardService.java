@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.crud.basic.basicweb.domain.Article;
 import web.crud.basic.basicweb.domain.ArticleMapper;
+import web.crud.basic.basicweb.domain.User;
+import web.crud.basic.basicweb.domain.UserMapper;
 
 import java.util.List;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class BoardService {
 
     private final ArticleMapper articleMapper;
+    private final UserMapper userMapper;
 
     @Transactional
     public List<Article> getAllArticles() {
@@ -29,6 +32,17 @@ public class BoardService {
             return false;
         }
         return true;
+    }
+
+    @Transactional
+    public Article getArticleById(Long articleId) {
+        return articleMapper.getById(articleId);
+    }
+
+    @Transactional
+    public String getWriterName(Article article) {
+        String writerName = userMapper.getUserById(article.getWriter()).getName();
+        return writerName;
     }
 
 }

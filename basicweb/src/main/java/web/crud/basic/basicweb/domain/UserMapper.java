@@ -19,7 +19,12 @@ public interface UserMapper {
     @ResultMap("UserMap")
     User getUserByEmail(@Param("email") String email);
 
+    @Select("SELECT * FROM user WHERE id=#{id}")
+    @ResultMap("UserMap")
+    User getUserById(@Param("id") Long id);
+
     @Insert("INSERT INTO user(email, name, password) VALUES (#{user.email}, #{user.name}, #{user.password})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertUser(@Param("user") User user);
+
 }

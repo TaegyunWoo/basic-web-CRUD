@@ -23,7 +23,7 @@ public interface ArticleMapper {
 
     @Select("SELECT * FROM article WHERE id=#{id}")
     @ResultMap("ArticleMap")
-    Article getById(@Param("id") String id);
+    Article getById(@Param("id") Long id);
 
     @Select("SELECT * FROM article WHERE writer=#{userId}")
     @ResultMap("ArticleMap")

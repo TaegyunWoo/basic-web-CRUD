@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Article</title>
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #007bff;
+      background: linear-gradient(to right, #0062E6, #33AEFF);
+    }
+  </style>
+</head>
+<body>
+<div class="container px-5 my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card border-0 rounded-3 shadow-lg">
+        <div class="card-body p-4">
+          <div class="text-center">
+            <div class="h1 fw-light">게시글</div>
+          </div>
+          <div class="form-floating mb-3">
+            <h2 class="form-control" id="title"
+                th:text="${article.title}">글 제목</h2>
+            <label for="title">글 제목</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <small class="form-control" id="id"
+                th:text="${article.id}">글 번호</small>
+            <label for="id">글 번호</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <small class="form-control" id="writer"
+                   th:text="${writerName}">작성자</small>
+            <label for="id">작성자</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <small class="form-control" id="dateTime"
+                   th:text="${article.dateTime}">작성일</small>
+            <label for="dateTime">작성일</label>
+          </div>
+
+          <div class="form-floating mb-3">
+              <p class="form-control" id="content" type="text"
+                        th:text="${article.content}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
