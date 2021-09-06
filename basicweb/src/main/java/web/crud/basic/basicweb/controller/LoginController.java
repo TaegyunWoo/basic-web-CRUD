@@ -34,7 +34,7 @@ public class LoginController {
         if (user == null) {
             return "home";
         } else {
-            return "redirect:/board";
+            return "redirect:/board/1";
         }
 
     }
@@ -62,7 +62,7 @@ public class LoginController {
         HttpSession session = request.getSession(true);
         session.setAttribute("loginUser", user);
 
-        return "redirect:/board";
+        return "redirect:/board/1";
     }
 
     @GetMapping("/logout")
