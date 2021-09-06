@@ -1,6 +1,5 @@
-package web.crud.basic.basicweb.login;
+package web.crud.basic.basicweb.interceptor;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;

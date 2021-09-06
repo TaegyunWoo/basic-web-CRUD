@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ShowArticleForm {
+public class FullArticleForm {
     private Long id;
     private String title;
     private String content;

@@ -1,4 +1,4 @@
-package web.crud.basic.basicweb.login;
+package web.crud.basic.basicweb.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;

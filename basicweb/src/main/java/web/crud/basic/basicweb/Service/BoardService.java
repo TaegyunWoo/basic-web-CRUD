@@ -45,4 +45,14 @@ public class BoardService {
         return writerName;
     }
 
+    @Transactional
+    public Article updateArticle(Article article) {
+        int zeroIsFail = articleMapper.update(article);
+        Article updatedArticle = null;
+        if (zeroIsFail != 0) {
+            updatedArticle = articleMapper.getById(article.getId());
+        }
+        return updatedArticle;
+    }
+
 }

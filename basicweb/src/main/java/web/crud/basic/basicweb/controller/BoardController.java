@@ -11,12 +11,11 @@ import web.crud.basic.basicweb.Service.BoardService;
 import web.crud.basic.basicweb.domain.Article;
 import web.crud.basic.basicweb.domain.User;
 import web.crud.basic.basicweb.form.NewArticleForm;
-import web.crud.basic.basicweb.form.ShowArticleForm;
+import web.crud.basic.basicweb.form.FullArticleForm;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,7 +78,7 @@ public class BoardController {
                               Model model) {
         Article article = boardService.getArticleById(articleNum);
         String writerName = boardService.getWriterName(article);
-        ShowArticleForm form = new ShowArticleForm();
+        FullArticleForm form = new FullArticleForm();
         form.setTitle(article.getTitle());
         form.setId(article.getId());
         form.setContent(article.getContent());
@@ -90,6 +89,27 @@ public class BoardController {
         model.addAttribute("article", form);
 
         return "article";
+    }
+
+    @GetMapping("/edit/{articleNum}")
+    public String showEditArticle(@PathVariable Long articleNum,
+                              @ModelAttribute("article") FullArticleForm form) {
+        return "edit-article";
+    }
+
+    @PostMapping("/edit/{articleNum}")
+    public String editArticle(@PathVariable Long articleNum,
+                              @ModelAttribute("article") FullArticleForm form) {
+        Article article = new Article();
+        article.setId(form.getId());
+        article.setTitle(form.getTitle());
+        article.setContent(form.getContent());
+        article.setDateTime(LocalDateTime.now());
+        article.setWriter(form.getWriterId());
+        article = boardService.updateArticle(article);
+
+        return "redirect:/board/article/" + articleNum;
+
     }
 
     private List<Article> getArticlesOfPage(int pageNum, List<Article> articleList) {

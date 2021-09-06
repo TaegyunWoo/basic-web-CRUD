@@ -29,5 +29,7 @@ public interface ArticleMapper {
     @ResultMap("ArticleMap")
     Article getByWriter(@Param("userId") String userId);
 
-
+    @Update("UPDATE article SET title=#{article.title}, datetime=#{article.dateTime}, content=#{article.content} WHERE id=#{article.id}")
+    @ResultMap("ArticleMap")
+    int update(@Param("article") Article article);
 }
