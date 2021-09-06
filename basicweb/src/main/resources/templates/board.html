@@ -9,15 +9,13 @@
 <body>
 <!-- Page Content -->
 <div class="container">
-
+  <br/>
   <button type="button" class="btn-lg" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
   <button type="button" class="btn-lg" th:onclick="|location.href='@{/board/new-article}'|">글쓰기</button>
 
 
   <!-- Page Heading -->
-  <h1 class="my-4">게시판
-    <small>회원용</small>
-  </h1>
+  <h1 class="my-4">게시판</h1>
 
   <!-- Project One -->
   <th:block th:each="article, articleStat : ${articleList}">
