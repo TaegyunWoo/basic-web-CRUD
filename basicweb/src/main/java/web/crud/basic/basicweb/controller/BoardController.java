@@ -11,6 +11,7 @@ import web.crud.basic.basicweb.Service.BoardService;
 import web.crud.basic.basicweb.domain.Article;
 import web.crud.basic.basicweb.domain.User;
 import web.crud.basic.basicweb.form.NewArticleForm;
+import web.crud.basic.basicweb.form.ShowArticleForm;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -78,9 +79,15 @@ public class BoardController {
                               Model model) {
         Article article = boardService.getArticleById(articleNum);
         String writerName = boardService.getWriterName(article);
+        ShowArticleForm form = new ShowArticleForm();
+        form.setTitle(article.getTitle());
+        form.setId(article.getId());
+        form.setContent(article.getContent());
+        form.setDateTime(article.getDateTime());
+        form.setWriterId(article.getWriter());
+        form.setWriterName(writerName);
 
-        model.addAttribute("article", article);
-        model.addAttribute("writerName", writerName);
+        model.addAttribute("article", form);
 
         return "article";
     }

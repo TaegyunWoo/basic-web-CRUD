@@ -10,6 +10,9 @@
       background: #007bff;
       background: linear-gradient(to right, #0062E6, #33AEFF);
     }
+    p {
+
+    }
   </style>
 </head>
 <body>
@@ -21,34 +24,47 @@
           <div class="text-center">
             <div class="h1 fw-light">게시글</div>
           </div>
-          <div class="form-floating mb-3">
-            <h2 class="form-control" id="title"
-                th:text="${article.title}">글 제목</h2>
-            <label for="title">글 제목</label>
-          </div>
 
-          <div class="form-floating mb-3">
-            <small class="form-control" id="id"
-                th:text="${article.id}">글 번호</small>
-            <label for="id">글 번호</label>
-          </div>
+          <form th:object="${article}" method="post" th:action>
 
-          <div class="form-floating mb-3">
-            <small class="form-control" id="writer"
-                   th:text="${writerName}">작성자</small>
-            <label for="id">작성자</label>
-          </div>
+            <!-- Name Input -->
+            <div class="form-floating mb-3">
+              <input class="form-control" id="title"
+                     th:field="*{title}" type="text" disabled/>
+              <label for="title">제목</label>
+            </div>
 
-          <div class="form-floating mb-3">
-            <small class="form-control" id="dateTime"
-                   th:text="${article.dateTime}">작성일</small>
-            <label for="dateTime">작성일</label>
-          </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="id"
+                     th:field="*{id}" type="text" disabled/>
+              <label for="id">글 번호</label>
+            </div>
 
-          <div class="form-floating mb-3">
-              <p class="form-control" id="content" type="text"
-                        th:text="${article.content}"></p>
-          </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="writerName"
+                     th:field="*{writerName}" type="text" disabled/>
+              <label for="writerName">작성자</label>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input class="form-control" id="dateTime"
+                     th:field="*{dateTime}" type="text" disabled/>
+              <label for="dateTime">작성일</label>
+            </div>
+
+            <!-- Message Input -->
+            <div class="form-floating mb-3">
+              <textarea class="form-control" id="content" type="text"
+                        th:field="*{content}" style="height: 10rem;" disabled></textarea>
+              <label for="content">본문</label>
+            </div>
+
+            <div class="d-grid" th:if="${#session.getAttribute('loginUser').getId()}==*{writerId}">
+              <button class="btn btn-primary btn-lg" type="button">수정하기</button>
+            </div>
+          </form>
+          <!-- End of contact form -->
+
         </div>
       </div>
     </div>
