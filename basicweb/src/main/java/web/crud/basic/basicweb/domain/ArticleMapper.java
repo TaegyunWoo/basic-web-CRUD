@@ -8,7 +8,7 @@ import java.util.List;
 public interface ArticleMapper {
 
     @Insert("INSERT INTO article (title, content, writer, datetime) VALUES (#{article.title}, #{article.content}, #{article.writer}, #{article.dateTime})")
-    @Options(useGeneratedKeys = true, keyColumn = "id")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     int insertArticle(@Param("article") Article article);
 
     @Select("SELECT * FROM article")

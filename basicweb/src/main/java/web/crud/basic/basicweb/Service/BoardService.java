@@ -28,6 +28,7 @@ public class BoardService {
     @Transactional
     public boolean addNewArticle(Article article) {
         int success = articleMapper.insertArticle(article);
+        log.info("article ID: {}", article.getId());
         if (success == 0) {
             return false;
         }
