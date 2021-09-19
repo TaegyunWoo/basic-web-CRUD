@@ -29,6 +29,7 @@ public class BoardController {
 
     @GetMapping("/{pageNum}")
     public String showBoard(@PathVariable int pageNum,
+                            @SessionAttribute(name = "loginUser", required = false) User loginUser,
                             HttpServletRequest request,
                             Model model) {
 

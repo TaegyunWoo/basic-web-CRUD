@@ -10,8 +10,13 @@
 <!-- Page Content -->
 <div class="container">
   <br/>
-  <button type="button" class="btn-lg" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
-  <button type="button" class="btn-lg" th:onclick="|location.href='@{/board/new-article}'|">글쓰기</button>
+  <th:block th:if="${#request.getAttribute('isLoginUser')}"> <!--/* 로그인된 사용자일 경우 */-->
+    <button type="button" class="btn-lg" th:onclick="|location.href='@{/logout}'|">로그아웃</button>
+    <button type="button" class="btn-lg" th:onclick="|location.href='@{/board/new-article}'|">글쓰기</button>
+  </th:block>
+  <th:block th:unless="${#request.getAttribute('isLoginUser')}"> <!--/* 로그인하지 않은 사용자일 경우 */-->
+    <button type="button" class="btn-lg" th:onclick="|location.href='@{/}'|">로그인</button>
+  </th:block>
 
 
   <!-- Page Heading -->
