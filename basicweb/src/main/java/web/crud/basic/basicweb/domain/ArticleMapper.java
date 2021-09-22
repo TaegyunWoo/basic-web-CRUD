@@ -27,7 +27,7 @@ public interface ArticleMapper {
 
     @Select("SELECT * FROM article WHERE writer=#{userId}")
     @ResultMap("ArticleMap")
-    Article getByWriter(@Param("userId") String userId);
+    List<Article> getByWriter(@Param("userId") Long userId);
 
     @Update("UPDATE article SET title=#{article.title}, datetime=#{article.dateTime}, content=#{article.content} WHERE id=#{article.id}")
     @ResultMap("ArticleMap")
