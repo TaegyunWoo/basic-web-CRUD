@@ -52,7 +52,7 @@ public class BoardController {
 
     @GetMapping("/new-article")
     public String showArticleAddForm(@ModelAttribute("article") NewArticleForm form) {
-        return "new-article";
+        return "add-article";
     }
 
     @PostMapping("/new-article")
@@ -60,7 +60,7 @@ public class BoardController {
                              @SessionAttribute("loginUser") User user,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "new-article";
+            return "add-article";
         }
 
         Article newArticle = new Article();
