@@ -16,6 +16,7 @@ import web.crud.basic.basicweb.WebConfig;
 import web.crud.basic.basicweb.domain.Article;
 import web.crud.basic.basicweb.domain.ArticleMapper;
 import web.crud.basic.basicweb.domain.User;
+import web.crud.basic.basicweb.form.NewArticleForm;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,8 +25,7 @@ import java.util.List;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class) //Mock 객체를 위한 확장모델 등록
 @ContextConfiguration(classes = WebConfig.class) //Application Context(설정) 등록
@@ -85,5 +85,24 @@ class BoardControllerTest {
         actions.andExpect(status().isOk()).andDo(print());
 
     }
+
+    @DisplayName("새 게시글 작성 창 보이기")
+    @Test
+    void showArticleAddFormTest() throws Exception {
+        //given
+        NewArticleForm form = new NewArticleForm();
+        form.setTitle("New Article Title");
+        form.setContent("New Article Content");
+
+        //when
+        ResultActions actions = mockMvc.perform(
+            get("/board/new-article")
+        );
+
+        //then
+        actions.andExpect(status().isOk())
+            .andExpect(view().name("add-article"));
+    }
+
 
 }
