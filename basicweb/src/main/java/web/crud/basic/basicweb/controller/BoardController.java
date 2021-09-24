@@ -56,8 +56,8 @@ public class BoardController {
     }
 
     @PostMapping("/new-article")
-    public String addArticle(@Validated @ModelAttribute("article") NewArticleForm form,
-                             @SessionAttribute("loginUser") User user,
+    public String addArticle(@SessionAttribute("loginUser") User user,
+                            @Validated @ModelAttribute("article") NewArticleForm form,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add-article";
