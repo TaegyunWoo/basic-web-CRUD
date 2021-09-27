@@ -4,6 +4,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mybatis.spring.boot.test.autoconfigure.AutoConfigureMybatis;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
@@ -11,23 +13,28 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import web.crud.basic.basicweb.Service.BoardService;
 import web.crud.basic.basicweb.WebConfig;
 import web.crud.basic.basicweb.domain.Article;
 import web.crud.basic.basicweb.domain.ArticleMapper;
 import web.crud.basic.basicweb.domain.User;
+import web.crud.basic.basicweb.domain.UserMapper;
 import web.crud.basic.basicweb.form.NewArticleForm;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class) //Mock 객체를 위한 확장모델 등록
+@AutoConfigureMybatis
 @ContextConfiguration(classes = WebConfig.class) //Application Context(설정) 등록
 @WebMvcTest(BoardController.class) //테스트할 컨트롤러 지정
 class BoardControllerTest {
@@ -104,5 +111,104 @@ class BoardControllerTest {
             .andExpect(view().name("add-article"));
     }
 
+    @DisplayName("게시글 추가")
+    @Test
+    void addArticleTest() throws Exception {
+        //given
+        NewArticleForm rightForm = new NewArticleForm();
+        NewArticleForm wrongForm = new NewArticleForm();
+        User loginUser = new User();
+        MockHttpSession session = new MockHttpSession();
 
+        rightForm.setTitle("Test Article Title");
+        rightForm.setContent("Test Article Content");
+        wrongForm.setTitle("");
+        wrongForm.setContent("");
+        loginUser.setId(5L);
+        loginUser.setName("BoardTestUser");
+        loginUser.setEmail("BoardTestUser@test.com");
+        loginUser.setPassword("123test!");
+        session.setAttribute("loginUser", loginUser);
+
+        given(boardService.addNewArticle(any())).willReturn(true);
+
+
+        //when
+        ResultActions rightPerform = mockMvc.perform(
+            post("/board/new-article")
+                .param("title", rightForm.getTitle())
+                .param("content", rightForm.getContent())
+                .session(session)
+        );
+
+        ResultActions wrongPerform = mockMvc.perform(
+            post("/board/new-article")
+                .param("title", wrongForm.getTitle())
+                .param("content", wrongForm.getContent())
+                .session(session)
+        );
+
+        //then
+        rightPerform.andExpect(status().is3xxRedirection()).andExpect(redirectedUrl("/board/1")); //성공했는지
+        wrongPerform.andExpect(status().isOk()).andExpect(view().name("add-article")); //실패했는지
+    }
+
+    @DisplayName("게시글 보이기")
+    @Test
+    void showArticleTest() throws Exception {
+        //given
+        Article article = new Article();
+        article.setTitle("showArticleTest Title");
+        article.setContent("showArticleTest Content");
+        article.setWriter(1L);
+        article.setId(10L);
+        article.setDateTime(LocalDateTime.now());
+        given(boardService.getArticleById(1L)).willReturn(article);
+
+        given(boardService.getWriterName(article)).willReturn("showArticleTest Writer");
+
+        //when
+        ResultActions perform = mockMvc.perform(get("/board/article/1"));
+
+        //then
+        perform.andExpect(status().isOk()).andExpect(view().name("article"));
+    }
+
+    @Transactional
+    @DisplayName("게시글 수정")
+    @Test
+    void showEditArticle() throws Exception {
+        //given
+        Article updatedArticle = new Article();
+        updatedArticle.setId(10L);
+        updatedArticle.setTitle("Updated Article");
+        updatedArticle.setContent("Updated Article");
+        updatedArticle.setWriter(1L);
+
+        given(boardService.updateArticle(any())).willReturn(updatedArticle);
+
+        //when
+        ResultActions perform = mockMvc.perform(post("/board/edit/" + updatedArticle.getId())
+            .param("id", String.valueOf(updatedArticle.getId()))
+            .param("title", updatedArticle.getTitle())
+            .param("content", updatedArticle.getContent())
+            .param("writerId", String.valueOf(updatedArticle.getWriter()))
+        );
+
+        //then
+        perform.andExpect(status().is3xxRedirection());
+    }
+
+    @Transactional
+    @DisplayName("게시글 삭제")
+    @Test
+    void deleteArticle() throws Exception {
+        //given
+
+        //when
+        ResultActions perform = mockMvc.perform(get("/board/edit/1/delete"));
+
+        //then
+        perform.andExpect(status().is3xxRedirection());
+    }
 }
