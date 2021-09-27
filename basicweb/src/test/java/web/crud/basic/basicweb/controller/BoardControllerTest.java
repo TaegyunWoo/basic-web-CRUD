@@ -177,7 +177,7 @@ class BoardControllerTest {
     @Transactional
     @DisplayName("게시글 수정")
     @Test
-    void showEditArticle() throws Exception {
+    void editArticleTest() throws Exception {
         //given
         Article updatedArticle = new Article();
         updatedArticle.setId(10L);
@@ -202,7 +202,7 @@ class BoardControllerTest {
     @Transactional
     @DisplayName("게시글 삭제")
     @Test
-    void deleteArticle() throws Exception {
+    void deleteArticleTest() throws Exception {
         //given
 
         //when
