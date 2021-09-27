@@ -44,11 +44,13 @@ public class LoginController {
                         BindingResult bindingResult,
                         HttpServletRequest request) {
 
-        User user = getLoginUser(form.getEmail(), form.getPassword());
+        User user;
 
         if (bindingResult.hasFieldErrors()) {
             return "home";
         }
+
+        user = getLoginUser(form.getEmail(), form.getPassword());
 
         if (user == null) {
             bindingResult.reject("wrongLoginInfo", null, null);
