@@ -24,7 +24,7 @@ public class SignUpController {
 
     @GetMapping("/sign-up")
     public String showSignUp(@ModelAttribute("user") SignUpForm form) {
-        return "sign-up";
+        return "add-user";
     }
 
     @PostMapping("/sign-up")
@@ -46,7 +46,7 @@ public class SignUpController {
             bindingResult.rejectValue("email", "sameEmail", new Object[] {form.getEmail()}, null);
         }
         if (bindingResult.hasErrors()) {
-            return "sign-up";
+            return "add-user";
         }
 
         User newUser = new User();
