@@ -8,7 +8,6 @@
 
 - 기본적인 게시판형 웹 애플리케이션을 구축한다.
 - 스프링부트를 활용하여 백엔드를 구현한다.
-- 서버 인프라와 CI/CD 까지 구축한다.
 - 서버단 구축에 집중한다.
 
 <br/>
@@ -19,7 +18,6 @@
 - 직접 작성한 코드를 통해, 스프링에 대한 개념과 원리를 피부로 느낀다.
 - 그동안 학습한 스프링의 개념과 원리가 머릿속에서 정리된다.
 - Thymeleaf 문법을 익힌다.
-- 서버의 인프라적 구조를 이해할 수 있다.
 
 <br/><br/>
 
@@ -30,8 +28,6 @@
 ### 프로젝트 주제
 
 - 기본적인 게시판형 웹 애플리케이션 (CRUD)
-- 로컬 환경 뿐만 아니라, 실제 AWS 서버에 배포해본다.
-- CI/CD를 통해, 자동배포가 가능하도록 한다.
 
 ### 개발 내용
 
@@ -43,17 +39,18 @@
 
 ## 시스템 구성도
 
-### 인프라 구성도
-
-![Untitled](/docs/img/Untitled.png)
-
 ### SW 구성도
 
 ![Untitled](/docs/img/Untitled%201.png)
 
 ### 적용 기술
 
-![Untitled](/docs/img/Untitled%203.png)
+|구분|기술|
+|----|----|
+|Front|BootStrap Templete|
+|Back|Spring Boot|
+|DB|MariaDB|
+|Template Engine|Thymeleaf|
 
 <br/><br/>
 
